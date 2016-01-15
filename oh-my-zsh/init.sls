@@ -19,7 +19,7 @@ clone_oh_my_zsh_repo_{{user.username}}:
 .zshrc_{{user.username}}:
   file.managed:
     - name: "{{ pillar['oh-my-zsh']['home'] }}/{{user.username}}/.zshrc"
-    - source: salt://oh-my-zsh/files/.zshrc
+    - source: salt://oh-my-zsh/files/.zshrc.jinja2
     - user: {{ user.username }}
     - group: {{ user.group }}
     - mode: '0644'
