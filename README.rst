@@ -22,4 +22,7 @@ Installs the oh-my-zsh package.
 
 Requirements
 ================
-  * `epel-formula <https://github.com/saltstack-formulas/epel-formula>`_
+
+Ubuntu: None
+
+RedHat: `epel-formula <https://github.com/saltstack-formulas/epel-formula>`_
