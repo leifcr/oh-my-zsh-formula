@@ -1,14 +1,14 @@
 {% if grains['os_family'] == 'RedHat' %}
 include:
-    - epel
+  - epel
 {% endif %}
 
 zsh:
-    pkg:
-        - installed
-        - name: zsh
-        {% if grains['os_family'] == 'RedHat' %}
-        - fromrepo: epel
-        - require:
-            - pkg: epel
-        {% endif %}
+  pkg:
+    - installed
+    - name: zsh
+    {% if grains['os_family'] == 'RedHat' %}
+    - fromrepo: epel
+    - require:
+      - pkg: epel
+    {% endif %}
