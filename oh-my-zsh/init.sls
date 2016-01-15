@@ -6,6 +6,7 @@ change_shell_{{user.username}}:
     - name: user.chshell
     - m_name: {{ user.username }}
     - shell: /usr/bin/zsh
+    - onlyif: "test -d {{ pillar['oh-my-zsh']['home'] }}/{{user.username}}"
 
 clone_oh_my_zsh_repo_{{user.username}}:
   git.latest:
@@ -13,6 +14,7 @@ clone_oh_my_zsh_repo_{{user.username}}:
     - rev: master
     - target: "{{ pillar['oh-my-zsh']['home'] }}/{{user.username}}/.oh-my-zsh"
     - unless: "test -d {{ pillar['oh-my-zsh']['home'] }}/{{user.username}}/.oh-my-zsh"
+    - onlyif: "test -d {{ pillar['oh-my-zsh']['home'] }}/{{user.username}}"
 
 .zshrc_{{user.username}}:
   file.managed:
@@ -22,6 +24,7 @@ clone_oh_my_zsh_repo_{{user.username}}:
     - group: {{ user.group }}
     - mode: '0644'
     - template: jinja
+    - onlyif: "test -d {{ pillar['oh-my-zsh']['home'] }}/{{user.username}}"
 
 {{ endfor }}
 
