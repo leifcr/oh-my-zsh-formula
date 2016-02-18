@@ -3,7 +3,8 @@ oh-my-zsh:
     - name: vagrant
     - group: vagrant
     - home: /home/vagrant
-  theme: af-magic
+  theme: nicoulaj
   disable-auto-update: false
+  disable-update-prompt: true
   disable-untracked-files-dirty: true
-  plugins: git
+  plugins: git rails ruby debian zsh-navigation-tools
