@@ -9,7 +9,7 @@ change_shell_{{user.username}}:
     - name: user.chshell
     - m_name: {{ user.username }}
     - shell: /usr/bin/zsh
-    - unless: test $(getent passwd {{ user.username }} | cut -d: -f7 ) = "/usr/bin/zsh"
+    - unless: "test $(getent passwd {{ user.username }} | cut -d: -f7 ) = '/usr/bin/zsh'"
     - onlyif: "test -d {{ user_home_folder }}"
 
 clone_oh_my_zsh_repo_{{user.username}}:
