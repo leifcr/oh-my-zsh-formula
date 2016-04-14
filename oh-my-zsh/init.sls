@@ -23,6 +23,21 @@ clone_oh_my_zsh_repo_{{user.username}}:
     - require:
       - pkg: zsh
 
+set_oh_my_zsh_folder_and_file_permissions_{{user.username}}:
+  file.directory:
+    - name: "{{ oh_my_zsh['home'] }}/{{user.username}}/.oh-my-zsh"
+    - user: {{user.username}}
+    - group: {{user.group}}
+    - file_mode: 744
+    - dir_mode: 755
+    - makedirs: True
+    - recurse:
+      - user
+      - group
+      - mode
+    - require:
+      - git: clone_oh_my_zsh_repo_{{user.username}}
+
 zshrc_{{user.username}}:
   file.managed:
     - name: "{{ oh_my_zsh['home'] }}/{{user.username}}/.zshrc"
