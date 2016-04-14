@@ -37,6 +37,8 @@ set_oh_my_zsh_folder_and_file_permissions_{{user.username}}:
       - mode
     - require:
       - git: clone_oh_my_zsh_repo_{{user.username}}
+    - require_in:
+      - file: zshrc_{{user.username}}
 
 zshrc_{{user.username}}:
   file.managed:
