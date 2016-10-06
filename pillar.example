@@ -1,8 +1,10 @@
 oh-my-zsh:
-  user:
-    - name: vagrant
-    - group: vagrant
-    - home: /home/vagrant
+  users:
+    vagrant:
+      username: vagrant
+      group: vagrant
+      home: /home/vagrant
+  home: /opt/oh-my-zsh
   theme: nicoulaj
   disable-auto-update: false
   disable-update-prompt: true
