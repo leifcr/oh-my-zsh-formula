@@ -44,7 +44,7 @@ set_oh_my_zsh_folder_and_file_permissions_{{user.username}}:
 zshrc_{{user.username}}:
   file.managed:
     - name: "{{ oh_my_zsh['home'] }}/{{user.username}}/.zshrc"
-    - source: salt://oh-my-zsh/files/.zshrc.jinja2
+    - source: salt://oh-my-zsh/files/zshrc.jinja2
     - user: {{ user.username }}
     - group: {{ user.group }}
     - mode: '0644'
