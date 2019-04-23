@@ -50,6 +50,13 @@ zshrc_{{user.username}}:
     - mode: '0644'
     - template: jinja
     - onlyif: "test -d {{ user_home_folder }}"
+    - context:
+      theme: {{ user.theme }}
+      disable-auto-update: {{ user.disable-auto-update }} 
+      disable-update-prompt: {{ user.disable-update-prompt }}
+      disable-untracked-files-dirty: {{ user.plugins }}
+      plugins: {{ user.plugins }}
+
 
 {% endfor %}
 {% endif %}
