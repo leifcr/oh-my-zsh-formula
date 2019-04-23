@@ -15,7 +15,7 @@ clone_oh_my_zsh_repo_{{user.username}}:
   git.latest:
     - name: https://github.com/robbyrussell/oh-my-zsh.git
     - rev: master
-    - target: "{{ oh_my_zsh['home'] }}/{{user.username}}/.oh-my-zsh"
+    - target: "{{ user_home_folder }}/.oh-my-zsh"
     - unless: "test -d {{ user_home_folder }}/.oh-my-zsh"
     - onlyif: "test -d {{ user_home_folder }}"
     - require_in:
@@ -25,7 +25,7 @@ clone_oh_my_zsh_repo_{{user.username}}:
 
 set_oh_my_zsh_folder_and_file_permissions_{{user.username}}:
   file.directory:
-    - name: "{{ oh_my_zsh['home'] }}/{{user.username}}/.oh-my-zsh"
+    - name: "{{ user_home_folder }}/.oh-my-zsh"
     - user: {{user.username}}
     - group: {{user.group}}
     - file_mode: 744
@@ -43,7 +43,7 @@ set_oh_my_zsh_folder_and_file_permissions_{{user.username}}:
 
 zshrc_{{user.username}}:
   file.managed:
-    - name: "{{ oh_my_zsh['home'] }}/{{user.username}}/.zshrc"
+    - name: "{{ user_home_folder }}/.zshrc"
     - source: salt://oh-my-zsh/files/.zshrc.jinja2
     - user: {{ user.username }}
     - group: {{ user.group }}
