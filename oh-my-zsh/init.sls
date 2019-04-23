@@ -52,8 +52,8 @@ zshrc_{{user.username}}:
     - onlyif: "test -d {{ user_home_folder }}"
     - context:
       theme: {{ user.theme }}
-      disable-auto-update: {{ user.disable-auto-update }} 
-      disable-update-prompt: {{ user.disable-update-prompt }}
+      disable-auto-update: {{ user['disable-auto-update'] }} 
+      disable-update-prompt: {{ user['disable-update-prompt'] }}
       disable-untracked-files-dirty: {{ user.plugins }}
       plugins: {{ user.plugins }}
 
