@@ -3,7 +3,7 @@
 include:
   - oh-my-zsh.zsh
 {% for username, user in salt['pillar.get']('oh-my-zsh:users', {}).items() %}
-{%- set user_home_folder = oh_my_zsh.get('home', '/home') + '/' + user['username'] -%}
+{%- set user_home_folder = salt[user.info]({{user.username}}).home -%}
 change_shell_{{user.username}}:
   module.run:
     - name: user.chshell
