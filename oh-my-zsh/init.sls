@@ -1,16 +1,12 @@
-{%- set oh_my_zsh = salt['pillar.get']('oh-my-zsh') -%}
-{%- if oh_my_zsh is defined %}
+{%- set defaults = salt['pillar.get']('oh-my-zsh') -%}
+
+{%- if defaults is defined %}
 include:
   - oh-my-zsh.zsh
-{% for username, user in salt['pillar.get']('oh-my-zsh:users', {}).items() %}
+{% for username, user in defaults.get('users', {}).items() %}
 
 {%- set user_home_folder = salt['user.info'](username).home -%}
 {%- set group = user.get('group', username) -%}
-{%- set theme = user.get('theme') -%}
-{%- set disable_auto_update = user.get('disable-auto-update') -%}
-{%- set disable_update_prompt = user.get('disable-update-prompt') -%}
-{%- set disable_untracked_files_dirty = user.get('disable-untracked-files-dirty') -%}
-{%- set plugins = user.get('plugins', []) -%}
 
 change_shell_{{username}}:
   module.run:
@@ -59,13 +55,11 @@ zshrc_{{username}}:
     - template: jinja
     - onlyif: "test -d {{ user_home_folder }}"
     - context:
-      theme:  theme
-      disable-auto-update: disable_auto_update
-      disable-update-prompt:  disable_update_prompt
-      disable-untracked-files-dirty:  disable_untracked_files_dirty 
-      plugins:  plugins 
-
-Context is: {{ show_full_context()|yaml(False) }} 
+      theme:  {{ user.get('theme', defaults.get('theme', 'robbyrussell')) }}
+      disable_auto_update: {{ user.get('disable-auto-update', defaults.get('disable-auto-update', True)) }}
+      disable_update_prompt:  {{ user.get('disable-update-prompt', defaults.get('disable-update-prompt', False)) }}
+      disable_untracked_files_dirty:  {{ user.get('disable-untracked-files-dirty', defaults.get('disable-untracked-files-dirty', False)) }}
+      plugins:  {{ user.get('plugins', defaults.get('plugins', {})) }}
 
 {% endfor %}
 {% endif %}
