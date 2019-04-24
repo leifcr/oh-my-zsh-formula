@@ -3,8 +3,9 @@
 include:
   - oh-my-zsh.zsh
 {% for username, user in salt['pillar.get']('oh-my-zsh:users', {}).items() %}
-# Get config for the specific user and fallback on general options
+
 {%- set user_home_folder = salt['user.info'](username).home -%}
+{{ raise(user) }}
 {%- set group = user.get('group', username) -%}
 {%- set theme = user.get('theme') -%}
 {%- set disable_auto_update = user.get('disable-auto-update') -%}
