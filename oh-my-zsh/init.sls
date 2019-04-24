@@ -26,8 +26,6 @@ clone_oh_my_zsh_repo_{{username}}:
     - target: "{{ user_home_folder }}/.oh-my-zsh"
     - unless: "test -d {{ user_home_folder }}/.oh-my-zsh"
     - onlyif: "test -d {{ user_home_folder }}"
-    - require_in:
-      - file: zshrc_{{username}}
     - require:
       - pkg: zsh
 
