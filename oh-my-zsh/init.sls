@@ -3,7 +3,15 @@
 include:
   - oh-my-zsh.zsh
 {% for username, user in salt['pillar.get']('oh-my-zsh:users', {}).items() %}
+# Get config for the specific user and fallback on general options
 {%- set user_home_folder = salt['user.info'](username).home -%}
+{%- set group = user.get('group', username) -%}
+{%- set theme = user.get('theme') -%}
+{%- set disable_auto_update = user.get('disable-auto-update') -%}
+{%- set disable_update_prompt = user.get('disable-update-prompt') -%}
+{%- set disable_untracked_files_dirty = user.get('disable-untracked-files-dirty') -%}
+{%- set plugins = user.get('plugins', []) -%}
+
 change_shell_{{username}}:
   module.run:
     - name: user.chshell
@@ -27,7 +35,7 @@ set_oh_my_zsh_folder_and_file_permissions_{{username}}:
   file.directory:
     - name: "{{ user_home_folder }}/.oh-my-zsh"
     - user: {{username}}
-    - group: {{user.get('group', username)}}
+    - group: {{ group }}
     - file_mode: 744
     - dir_mode: 755
     - makedirs: True
@@ -46,16 +54,16 @@ zshrc_{{username}}:
     - name: "{{ user_home_folder }}/.zshrc"
     - source: salt://oh-my-zsh/files/.zshrc.jinja2
     - user: {{ username }}
-    - group: {{ user.get('group', username) }}
+    - group: {{ group }}
     - mode: '0644'
     - template: jinja
     - onlyif: "test -d {{ user_home_folder }}"
     - context:
-      theme: {{ user.get('theme') }}
-      disable-auto-update: {{ user.get('disable-auto-update') }} 
-      disable-update-prompt: {{ user.get('disable-update-prompt') }}
-      disable-untracked-files-dirty: {{ user.get('disable-untracked-files-dirty') }}
-      plugins: {{ user.get('plugins') }}
+      theme: {{ theme }}
+      disable-auto-update: {{ disable_auto_update }} 
+      disable-update-prompt: {{ disable_update_prompt }}
+      disable-untracked-files-dirty: {{ disable_untracked_files_dirty }}
+      plugins: {{ plugins }}
 
 
 {% endfor %}
