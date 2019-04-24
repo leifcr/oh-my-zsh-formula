@@ -45,8 +45,6 @@ set_oh_my_zsh_folder_and_file_permissions_{{username}}:
       - mode
     - require:
       - git: clone_oh_my_zsh_repo_{{username}}
-    - require_in:
-      - file: zshrc_{{username}}
     - onlyif: "test -d {{ user_home_folder }}"
 
 
