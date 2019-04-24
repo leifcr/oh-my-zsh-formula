@@ -65,6 +65,7 @@ zshrc_{{username}}:
       disable-untracked-files-dirty:  disable_untracked_files_dirty 
       plugins:  plugins 
 
+Context is: {{ show_full_context()|yaml(False) }} 
 
 {% endfor %}
 {% endif %}
