@@ -26,6 +26,8 @@ clone_oh_my_zsh_repo_{{username}}:
     - target: "{{ user_home_folder }}/.oh-my-zsh"
     - unless: "test -d {{ user_home_folder }}/.oh-my-zsh"
     - onlyif: "test -d {{ user_home_folder }}"
+    - require_in:
+      - file: zshrc_{{username}}
     - require:
       - pkg: zsh
 
@@ -43,8 +45,22 @@ set_oh_my_zsh_folder_and_file_permissions_{{username}}:
       - mode
     - require:
       - git: clone_oh_my_zsh_repo_{{username}}
+    - require_in:
+      - file: zshrc_{{username}}
     - onlyif: "test -d {{ user_home_folder }}"
 
+zshrc_{{username}}:
+  file.managed:
+    - name: "{{ user_home_folder }}/.zshrc"
+    - source: salt://oh-my-zsh/files/.zshrc.jinja2
+    - user: {{ username }}
+    - group: {{ group }}
+    - mode: '0644'
+    - template: jinja
+    - onlyif: "test -d {{ user_home_folder }}"
+    - context:
+      theme: {{ theme }}
+      plugins: {{ plugins }}
 
 
 {% endfor %}
