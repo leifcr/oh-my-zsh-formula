@@ -51,11 +51,11 @@ zshrc_{{user.username}}:
     - template: jinja
     - onlyif: "test -d {{ user_home_folder }}"
     - context:
-      theme: {{ user.theme }}
-      disable-auto-update: {{ user['disable-auto-update'] }} 
-      disable-update-prompt: {{ user['disable-update-prompt'] }}
-      disable-untracked-files-dirty: {{ user.plugins }}
-      plugins: {{ user.plugins }}
+      theme: {{ user.get('theme') }}
+      disable-auto-update: {{ user.get('disable-auto-update') }} 
+      disable-update-prompt: {{ user.get('disable-update-prompt') }}
+      disable-untracked-files-dirty: {{ user.get('disable-untracked-files-dirty') }}
+      plugins: {{ user.get('plugins') }}
 
 
 {% endfor %}
