@@ -59,8 +59,11 @@ zshrc_{{username}}:
     - template: jinja
     - onlyif: "test -d {{ user_home_folder }}"
     - context:
-      theme: {{ theme }}
-      plugins: {{ plugins }}
+      theme:  theme
+      disable-auto-update: disable_auto_update
+      disable-update-prompt:  disable_update_prompt
+      disable-untracked-files-dirty:  disable_untracked_files_dirty 
+      plugins:  plugins 
 
 
 {% endfor %}
