@@ -5,7 +5,6 @@ include:
 {% for username, user in salt['pillar.get']('oh-my-zsh:users', {}).items() %}
 
 {%- set user_home_folder = salt['user.info'](username).home -%}
-{{ raise(user) }}
 {%- set group = user.get('group', username) -%}
 {%- set theme = user.get('theme') -%}
 {%- set disable_auto_update = user.get('disable-auto-update') -%}
@@ -50,21 +49,6 @@ set_oh_my_zsh_folder_and_file_permissions_{{username}}:
       - file: zshrc_{{username}}
     - onlyif: "test -d {{ user_home_folder }}"
 
-zshrc_{{username}}:
-  file.managed:
-    - name: "{{ user_home_folder }}/.zshrc"
-    - source: salt://oh-my-zsh/files/.zshrc.jinja2
-    - user: {{ username }}
-    - group: {{ group }}
-    - mode: '0644'
-    - template: jinja
-    - onlyif: "test -d {{ user_home_folder }}"
-    - context:
-      theme: {{ theme }}
-      disable-auto-update: {{ disable_auto_update }} 
-      disable-update-prompt: {{ disable_update_prompt }}
-      disable-untracked-files-dirty: {{ disable_untracked_files_dirty }}
-      plugins: {{ plugins }}
 
 
 {% endfor %}
